@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 from src.coin_flipping import CoinFlipSimulator
 from src.bandit import BanditSimulator
+from src.bayesian_optimization import *
 
 st.title("🗼 HLAB 2024 Seminar Simulations")
 st.write(
@@ -61,3 +62,67 @@ st.pyplot(bandit_sim.visualize())
 if st.button("Reset Bandit Simulation"):
     st.session_state.bandit_sim = BanditSimulator(p = P)
     st.write("Simulator reset!")
+
+# Bayesian Optimization Simulator (without Posterior)
+
+st.write("## Bayesian Optimization Simulator")
+
+st.write('### Function 1')
+
+if 'bo_sim_1' not in st.session_state:
+    obj = ObjectiveFunction(function_1, bounds = [0.0, 5.0], noise = 0.25)
+    st.session_state.bo_sim_1 = BayesianOptimizationSimulator(obj)
+bo_sim_1 = st.session_state.bo_sim_1
+
+bo_input_1 = st.text_input(label = 'Query Point 1')
+
+if bo_input_1 is not '':
+    x = float(bo_input_1)
+    bo_sim_1.add_data_point(x)
+    st.write(f"{bo_sim_1.X}, {bo_sim_1.y}")
+
+st.pyplot(bo_sim_1.visualize_samples())
+
+if st.button('Reset BO 1'):
+    obj = ObjectiveFunction(function_1, bounds = [0.0, 5.0], noise = 0.25)
+    st.session_state.bo_sim_1 = BayesianOptimizationSimulator(obj)
+
+st.write('### Function 2')
+
+if 'bo_sim_2' not in st.session_state:
+    obj = ObjectiveFunction(function_2, bounds = [0.0, 5.0], noise = 0.25)
+    st.session_state.bo_sim_2 = BayesianOptimizationSimulator(obj)
+bo_sim_2 = st.session_state.bo_sim_2
+
+bo_input_2 = st.text_input(label = 'Query Point 2')
+
+if bo_input_2 is not '':
+    x = float(bo_input_2)
+    bo_sim_2.add_data_point(x)
+    st.write(f"{bo_sim_2.X}, {bo_sim_2.y}")
+
+st.pyplot(bo_sim_2.visualize_samples())
+
+if st.button('Reset BO 2'):
+    obj = ObjectiveFunction(function_2, bounds = [0.0, 5.0], noise = 0.25)
+    st.session_state.bo_sim_2 = BayesianOptimizationSimulator(obj)
+
+st.write('### Function 3')
+
+if 'bo_sim_3' not in st.session_state:
+    obj = ObjectiveFunction(function_3, bounds = [0.0, 5.0], noise = 1)
+    st.session_state.bo_sim_3 = BayesianOptimizationSimulator(obj)
+bo_sim_3 = st.session_state.bo_sim_3
+
+bo_input_3 = st.text_input(label = 'Query Point 3')
+
+if bo_input_3 is not '':
+    x = float(bo_input_3)
+    bo_sim_3.add_data_point(x)
+    st.write(f"{bo_sim_3.X}, {bo_sim_3.y}")
+
+st.pyplot(bo_sim_3.visualize_samples())
+
+if st.button('Reset BO 3'):
+    obj = ObjectiveFunction(function_3, bounds = [0.0, 5.0], noise = 1)
+    st.session_state.bo_sim_3 = BayesianOptimizationSimulator(obj)
